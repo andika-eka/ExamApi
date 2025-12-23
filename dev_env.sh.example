@@ -1,0 +1,3 @@
+export EXAMAPI_POSTGRES_ADMIN=admin
+export EXAMAPI_POSTGRES_PASSWORD=password
+export EXAMAPI_POSTGRES_DB=exam_db

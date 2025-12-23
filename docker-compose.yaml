@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: exam_db_dev
+    environment:
+      POSTGRES_DB: "${EXAMAPI_POSTGRES_DBNAME:-exam_db}"
+      POSTGRES_USER: "${EXAMAPI_POSTGRES_ADMIN}"
+      POSTGRES_PASSWORD: "${EXAMAPI_POSTGRES_PASSWORD}"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
