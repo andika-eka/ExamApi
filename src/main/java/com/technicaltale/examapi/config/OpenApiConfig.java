@@ -1,4 +1,4 @@
-package com.technicaltale.examapi;
+package com.technicaltale.examapi.config;
 
 import org.springframework.context.annotation.Configuration;
 
