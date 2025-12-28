@@ -20,7 +20,7 @@ import com.technicaltale.examapi.enums.UserRole;
 public class SecurityConfig {
     @Value("${app.admin.username}")
     private String adminUsername;
-    @Value("${app.admin.username}")
+    @Value("${app.admin.password}")
     private String adminPassword;
 
 

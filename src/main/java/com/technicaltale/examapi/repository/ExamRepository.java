@@ -12,4 +12,5 @@ import java.util.List;
 public interface ExamRepository extends JpaRepository<Exam, UUID> {
 
     List<Exam> findByTitleContainingIgnoreCase(String keyword);
+    List<Exam> findByIsPublicTrue();
 }
