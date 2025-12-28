@@ -32,4 +32,11 @@ public class Exam {
 
     @Column(name = "max_score")
     private Integer maxScore;
+
+    
+    @Column(name = "is_public")
+    private boolean isPublic =false;
+    
+    @Column(nullable = false)
+    public String owner;
 }

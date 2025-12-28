@@ -1,0 +1,10 @@
+{"properties": [{
+  "name": "app.admin.password",
+  "type": "java.lang.String",
+  "description": "default admin password"
+},
+{
+  "name": "app.admin.username",
+  "type": "java.lang.String",
+  "description": "default admin username"
+}]}
