@@ -23,7 +23,6 @@ public class SecurityConfig {
     @Value("${app.admin.password}")
     private String adminPassword;
 
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -35,10 +34,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth -> auth
-                        // protected endpoints
+                        .requestMatchers("/api/user/admin/**").hasRole(UserRole.ADMIN.name())
+                        .requestMatchers("/api/user/**").authenticated()
                         .requestMatchers("/api/exams/**").authenticated()
-
-                        // non-protected endpoints
+                        .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/test").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated())
