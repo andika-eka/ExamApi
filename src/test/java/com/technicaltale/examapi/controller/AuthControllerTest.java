@@ -1,10 +1,12 @@
 package com.technicaltale.examapi.controller;
 
+import com.technicaltale.examapi.config.SecurityConfig;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -19,6 +21,7 @@ import org.springframework.http.MediaType;
 
 @WebMvcTest(AuthController.class)
 @SuppressWarnings("null")
+@Import(SecurityConfig.class)
 public class AuthControllerTest {
     
     @Autowired
