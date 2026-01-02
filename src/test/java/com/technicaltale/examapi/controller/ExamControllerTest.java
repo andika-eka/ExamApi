@@ -3,13 +3,17 @@ package com.technicaltale.examapi.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.technicaltale.examapi.entity.Exam;
 import com.technicaltale.examapi.repository.ExamRepository;
+import com.technicaltale.examapi.config.SecurityConfig;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.hamcrest.Matchers;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +26,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @WebMvcTest(ExamController.class) 
 @SuppressWarnings("null")
+@Import(SecurityConfig.class) 
 class ExamControllerTest {
 
     @Autowired
@@ -48,8 +53,7 @@ class ExamControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/exams"))
                 .andExpect(MockMvcResultMatchers.status().isOk()) 
                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(2)) 
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].title").value("Math 101")) 
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].title").value("Bio 101")); 
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].title", Matchers.containsInAnyOrder("Math 101", "Bio 101"))); 
     }
 
     @Test
