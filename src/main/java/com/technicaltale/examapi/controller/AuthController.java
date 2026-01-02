@@ -36,6 +36,6 @@ public class AuthController {
         .roles(UserRole.USER.name())
         .build();
         userManager.createUser(user);
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).body("user has been created");
     }
 }
