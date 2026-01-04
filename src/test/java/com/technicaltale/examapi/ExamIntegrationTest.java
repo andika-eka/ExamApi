@@ -1,7 +1,8 @@
 package com.technicaltale.examapi;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.assertj.core.api.Assertions;
 
+import java.net.URI;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.technicaltale.examapi.entity.EssayQuestion;
 import com.technicaltale.examapi.entity.Exam;
 import com.technicaltale.examapi.entity.MultipleChoiceQuestion;
-// import com.technicaltale.examapi.entity.Question;
 import com.technicaltale.examapi.repository.ExamRepository;
 
 @SpringBootTest
@@ -26,7 +26,7 @@ class ExamIntegrationTest {
 
     @Test
     @Transactional
-    void shouldSavePolymorphicQuestions() {
+    void shouldSavePolymorphicQuestions() throws Exception {
         Exam exam = new Exam();
         exam.setTitle("Mixed Exam");
         exam.setOwner("andika");
@@ -35,8 +35,8 @@ class ExamIntegrationTest {
         MultipleChoiceQuestion mc = new MultipleChoiceQuestion();
         mc.setContent("Capital of France?");
         mc.setOptions(List.of("London", "Paris", "Berlin"));
-        mc.setCorrectOption("Paris");
-        mc.setAttachmentUri("http://cdn.com/map.jpg"); 
+        mc.setCorrectOption(1);
+        mc.setAttachmentUri(new URI("http://cdn.com/map.jpg")); 
         exam.addQuestion(mc);
 
         EssayQuestion essay = new EssayQuestion();
@@ -47,45 +47,45 @@ class ExamIntegrationTest {
         examRepository.save(exam);
 
         List<Exam> exams = examRepository.findAll();
-        assertThat(exams).isNotEmpty();
+        Assertions.assertThat(exams).isNotEmpty();
         Exam fetchedExam = exams.stream()
                                 .filter(e -> e.getTitle().equals("Mixed Exam"))
                                 .findFirst()
                                 .orElseThrow(() -> new AssertionError("Mixed Exam not found"));
 
-        assertThat(fetchedExam.getQuestions()).hasSize(2);
+        Assertions.assertThat(fetchedExam.getQuestions()).hasSize(2);
 
         Exam foundExam = examRepository.findById(fetchedExam.getId()).orElseThrow();
-        assertThat(foundExam.getQuestions()).hasSize(2);
-        assertThat(foundExam.getQuestions().get(0)).isInstanceOf(MultipleChoiceQuestion.class);
-        assertThat(foundExam.getQuestions().get(1)).isInstanceOf(EssayQuestion.class);
+        Assertions.assertThat(foundExam.getQuestions()).hasSize(2);
+        Assertions.assertThat(foundExam.getQuestions().get(0)).isInstanceOf(MultipleChoiceQuestion.class);
+        Assertions.assertThat(foundExam.getQuestions().get(1)).isInstanceOf(EssayQuestion.class);
 
     }
 
     @Test
     @Transactional
-    void shouldSaveExamWithNoQuestions() {
+    void shouldSaveExamWithNoQuestions() throws Exception{
         Exam exam = new Exam();
         exam.setTitle("No Questions Exam");
         exam.setOwner("andika");
         examRepository.save(exam);
 
         List<Exam> exams = examRepository.findAll();
-        assertThat(exams).isNotEmpty();
+        Assertions.assertThat(exams).isNotEmpty();
         Exam fetchedExam = exams.stream()
                                 .filter(e -> e.getTitle().equals("No Questions Exam"))
                                 .findFirst()
                                 .orElseThrow(() -> new AssertionError("No Questions Exam not found"));
 
-        assertThat(fetchedExam.getQuestions()).isEmpty();
+        Assertions.assertThat(fetchedExam.getQuestions()).isEmpty();
         
         Exam updatedExam = examRepository.findById(fetchedExam.getId()).orElseThrow();
         updatedExam.setTitle("Updated exam");
          MultipleChoiceQuestion mc = new MultipleChoiceQuestion();
         mc.setContent("Capital of France?");
         mc.setOptions(List.of("London", "Paris", "Berlin"));
-        mc.setCorrectOption("Paris");
-        mc.setAttachmentUri("http://cdn.com/map.jpg"); 
+        mc.setCorrectOption(1);
+        mc.setAttachmentUri(new URI("http://cdn.com/map.jpg")); 
         updatedExam.addQuestion(mc);
 
         EssayQuestion essay = new EssayQuestion();
@@ -94,11 +94,11 @@ class ExamIntegrationTest {
         updatedExam.addQuestion(essay);
         examRepository.save(updatedExam);
 
-        assertThat(examRepository.findAll().size()).isEqualTo(exams.size());
+        Assertions.assertThat(examRepository.findAll().size()).isEqualTo(exams.size());
         updatedExam = examRepository.findById(fetchedExam.getId()).orElseThrow();
-        assertThat(updatedExam.getQuestions()).hasSize(2);
-        assertThat(updatedExam.getQuestions().get(0)).isInstanceOf(MultipleChoiceQuestion.class);
-        assertThat(updatedExam.getQuestions().get(1)).isInstanceOf(EssayQuestion.class);
+        Assertions.assertThat(updatedExam.getQuestions()).hasSize(2);
+        Assertions.assertThat(updatedExam.getQuestions().get(0)).isInstanceOf(MultipleChoiceQuestion.class);
+        Assertions.assertThat(updatedExam.getQuestions().get(1)).isInstanceOf(EssayQuestion.class);
 
     }
     

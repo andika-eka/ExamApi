@@ -11,8 +11,8 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
-import lombok.AccessLevel;
 import lombok.Setter;
+import lombok.AccessLevel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +61,12 @@ public class Exam {
         questions.add(question);
         question.setExam(this);
     }
+
+    public void addQuestions(List<Question> questions) {
+        this.questions.addAll(questions);
+        questions.forEach(q -> q.setExam(this));
+    }
+
 
     public void removeQuestion(Question question) {
         questions.remove(question);

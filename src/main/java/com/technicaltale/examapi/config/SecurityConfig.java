@@ -15,6 +15,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.technicaltale.examapi.enums.UserRole;
 
+import lombok.Getter;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -22,6 +24,9 @@ public class SecurityConfig {
     private String adminUsername;
     @Value("${app.admin.password}")
     private String adminPassword;
+    
+    @Value("${app.key}")
+    @Getter private String appkey;
 
     @Bean
     public PasswordEncoder passwordEncoder() {

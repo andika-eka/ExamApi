@@ -6,6 +6,9 @@ import com.technicaltale.examapi.converter.StringListConverter;
 import jakarta.persistence.Convert;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
 @Entity
@@ -14,23 +17,13 @@ public class MultipleChoiceQuestion extends Question {
 
     // Converts Java List -> JSON String in DB
     @Convert(converter = StringListConverter.class)
-    private List<String> options;
+    @Getter @Setter private List<String> options;
+    @Getter @Setter private int correctOption; 
 
-    private String correctOption; 
-
-    public List<String> getOptions() {
-        return options;
+    public String getCorrectOptionString() {
+        return options.get(correctOption);
     }
 
-    public void setOptions(List<String> options) {
-        this.options = options;
-    }
+    
 
-    public String getCorrectOption() {
-        return correctOption;
-    }
-
-    public void setCorrectOption(String correctOption) {
-        this.correctOption = correctOption;
-    }
 }
