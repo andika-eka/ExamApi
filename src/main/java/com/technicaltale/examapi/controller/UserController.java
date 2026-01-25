@@ -27,8 +27,8 @@ public class UserController {
     private final InMemoryUserDetailsManager userManager;
     private final PasswordEncoder passwordEncoder;
 
-    public UserController(InMemoryUserDetailsManager userManager, PasswordEncoder passwordEncoder) {
-        this.userManager = userManager;
+    public UserController(InMemoryUserDetailsManager userDetailsService, PasswordEncoder passwordEncoder) {
+        this.userManager = userDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
 
